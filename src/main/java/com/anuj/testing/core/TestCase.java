@@ -3,22 +3,23 @@ package com.anuj.testing.core;
 public class TestCase {
     private  String title;
     private  String id ;
-    private  String status;
+    private  TestStatus status;
     private String steps;
     private String expectedResult;
 
 
-    public TestCase(String title , String id , String status ) {
+    public TestCase(String title , String id ) {
         this.id = id;
         this.title = title;
-        this.status = "NOT EXECUTED";
+        this.status = TestStatus.NOT_EXECUTED;
 
     }
 
     public TestCase(String title , String id , String steps , String expectedResult) {
         this.id = id;
         this.title = title;
-        this.status = "NOT EXECUTED";
+        this.steps = steps;
+        this.expectedResult = expectedResult;
 
     }
 
@@ -31,14 +32,14 @@ public class TestCase {
         return  this.title;
     }
 
-    public String getStatus() {
+    public TestStatus getStatus() {
         return  this.status;
     }
 
 
-    public void setStatus( String status) {
+    public void setStatus(TestStatus status) {
 
-        if(status == null || status.isEmpty()) {
+        if (status == null) {
             System.out.println("Update Ignored , No Status Info");
             return;
         }
@@ -49,11 +50,11 @@ public class TestCase {
 
 
     public boolean isPassed() {
-        return  "PASS".equals(status);
+        return  status == TestStatus.PASS;
     }
 
     public boolean isFailed() {
-        return "FAIL".equals(status);
+        return status == TestStatus.FAIL;
     }
 
     public void printSummary() {

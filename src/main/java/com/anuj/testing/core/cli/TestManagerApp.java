@@ -3,6 +3,7 @@ package com.anuj.testing.core.cli;
 import com.anuj.testing.core.TestCase;
 import com.anuj.testing.core.TestExecutor;
 import com.anuj.testing.core.TestRepository;
+import com.anuj.testing.core.TestStatus;
 
 import java.util.*;
 
@@ -38,11 +39,11 @@ public class TestManagerApp {
 
     }
 
-    private static Map<String , List<TestCase>> groupTestsByStatus(TestRepository repository) {
-        Map<String, List<TestCase>> testsByStatus = new HashMap<>();
+    private static Map<TestStatus, List<TestCase>> groupTestsByStatus(TestRepository repository) {
+        Map<TestStatus, List<TestCase>> testsByStatus = new HashMap<>();
 
         for (Map.Entry<String, TestCase> entry : repository.getAll().entrySet()) {
-            String status = entry.getValue().getStatus();
+            TestStatus status = entry.getValue().getStatus();
             testsByStatus
                     .computeIfAbsent(status, k -> new ArrayList<>())
                     .add(entry.getValue());
@@ -54,7 +55,7 @@ public class TestManagerApp {
     }
 
 
-    private static void printSummary(Map<String ,List<TestCase>> testsByStatus) {
+    private static void printSummary(Map<TestStatus ,List<TestCase>> testsByStatus) {
 
         if (testsByStatus.isEmpty()) {
             System.out.println("No execution data available");
@@ -62,8 +63,8 @@ public class TestManagerApp {
         }
 
         System.out.println("\n===== EXECUTION SUMMARY =====");
-        for(Map.Entry<String, List<TestCase>> entry : testsByStatus.entrySet()) {
-            String status = entry.getKey();
+        for(Map.Entry<TestStatus, List<TestCase>> entry : testsByStatus.entrySet()) {
+            TestStatus status = entry.getKey();
             List<TestCase> tests = entry.getValue();
 
             System.out.println(status + " : " + tests.size());
@@ -77,8 +78,12 @@ public class TestManagerApp {
     }
 
     private  static void printMenu () {
-        System.out.println("HERE ARE YOUR OPTIONS \n" +
-        "1) Add Testcase \n" + "2) Execute Testcases \n" + "3) Show Execution Summary\n" + "4) EXIT");
+        System.out.println("""
+                HERE ARE YOUR OPTIONS\s
+                1) Add Testcase\s
+                2) Execute Testcases\s
+                3) Show Execution Summary
+                4) EXIT""");
 
     }
 
