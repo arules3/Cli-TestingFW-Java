@@ -1,25 +1,24 @@
 package com.anuj.testing.core;
 
 public class TestCase {
-    private  String title;
-    private  String id ;
+    private  final String title;
+    private final String id ;
     private  TestStatus status;
-    private String steps;
-    private String expectedResult;
+    private final  String steps;
+    private final String expectedResult;
 
 
-    public TestCase(String title , String id ) {
-        this.id = id;
-        this.title = title;
-        this.status = TestStatus.NOT_EXECUTED;
 
-    }
 
     public TestCase(String title , String id , String steps , String expectedResult) {
+        if(id== null || id.isBlank()) {
+            throw new IllegalArgumentException("Test Id cannot be null or empty");
+        }
         this.id = id;
         this.title = title;
         this.steps = steps;
         this.expectedResult = expectedResult;
+        this.status = TestStatus.NOT_EXECUTED;
 
     }
 
