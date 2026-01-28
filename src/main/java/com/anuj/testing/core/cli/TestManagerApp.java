@@ -1,9 +1,6 @@
 package com.anuj.testing.core.cli;
 
-import com.anuj.testing.core.TestCase;
-import com.anuj.testing.core.TestExecutor;
-import com.anuj.testing.core.TestRepository;
-import com.anuj.testing.core.TestStatus;
+import com.anuj.testing.core.*;
 
 import java.util.*;
 
@@ -25,7 +22,7 @@ public class TestManagerApp {
 
     }
 
-    private static void executeAllTests(TestRepository repository, TestExecutor executor) {
+    private static void executeAllTests(TestRepository repository, TestExecutable executor) {
         Map<String, TestCase> testcases = repository.getAll();
 
         if(testcases.isEmpty()) {
@@ -93,7 +90,13 @@ public class TestManagerApp {
     public static void main(String[] args) {
 
         TestRepository repository = new TestRepository();
-        TestExecutor executor = new TestExecutor();
+        TestExecutable executor = new TestExecutor();
+        TestExecutable mock = testCase -> {
+            TestStatus status =testCase.getStatus();
+            System.out.println(status);
+        };
+
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {

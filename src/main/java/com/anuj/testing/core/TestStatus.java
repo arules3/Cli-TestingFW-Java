@@ -4,5 +4,8 @@ public enum TestStatus {
     PASS ,
     FAIL ,
     SKIPPED,
-    NOT_EXECUTED
+    NOT_EXECUTED;
+
+
+
 }
